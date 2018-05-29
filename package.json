@@ -1,0 +1,21 @@
+{
+  "name": "flightcalculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.11",
+    "jquery": "^3.3.1",
+    "node-fetch": "^2.1.2",
+    "nodemon": "^1.17.4",
+    "whatwg-fetch": "^2.0.4"
+  }
+}

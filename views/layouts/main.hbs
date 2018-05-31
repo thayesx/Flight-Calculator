@@ -10,16 +10,15 @@
   <script src="calculator.js"></script>
 </head>
 <body>
-  <h1 id="origin">Choose two airports to fly from + the date</h1>
+  <h1 id="header">{{ header }}</h1>
   <div class="inputs">
     <input type="text" id="date" placeholder="yyyy-mm-dd">
     <input type="text" id="origin1" placeholder="RDU">
     <input type="text" id="origin2" placeholder="SFO">
   </div>
   <button onclick="run()">Run shit</button>
-  <h2 id="status"></h2>
-  <h4 id="found"></h4>
-  <h4 id="notfound"></h4>
-  <p id="results">This will be flight info</p>
+  <h4 id="found">{{ found }}</h4>
+  <h4 id="notfound">{{ notfound }}</h4>
+  <p id="results">{{ searchResults }}</p>
 </body>
 </html>

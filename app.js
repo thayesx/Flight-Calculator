@@ -27,8 +27,11 @@ app.get('/search?', async (req, res) => {
   let orig2 = req.query.origin2;
   let date = req.query.date;
 
-  // List of destinations (short for testing speed)
-  const destinations = ['atl', 'den', 'dfw'];
+  // All possible destinations
+  const destinations = ['atl', 'den', 'dfw', 'mia', 'lax', 'las', 'sea', 
+                      'clt', 'mco', 'phx', 'ewr', 'iah', 'bos', 'msp', 
+                      'dtw', 'phl', 'lga', 'fll', 'bwi', 'dca', 'slc', 
+                      'mdw', 'iad', 'san', 'hnl', 'tpa', 'pdx'];
 
   // API token
   const token = 'b5160be6c1e24942d2978e5e5c607439';
@@ -36,6 +39,7 @@ app.get('/search?', async (req, res) => {
   try {
     // Run getFlightData to get flight info from API
     const data = await getFlightData(orig1, orig2, date, destinations, token);
+    console.log('data is...', data);
 
     // Render view with data returned from API
     res.render('layouts/main', {
@@ -62,31 +66,29 @@ async function getFlightData(orig1, orig2, date, destinations, token) {
   let found = [];
   let notfound = [];
 
-  // For each destination in destinations array
-  for (const dest of destinations) {
-    // Print current destination being searched to DOM + console
-    console.log('searching ' + dest.toUpperCase());
+  // Create asynchronous API call for each destination
+  await Promise.all(
+    // For each destination in destinations array
+    destinations.map( async (destination) => {
 
-    // Create URLs
-    let url1 = createURL(orig1, date, dest, token);
-    let url2 = createURL(orig2, date, dest, token);
+      // Create URLs
+      let url1 = createURL(orig1, date, destination, token);
+      let url2 = createURL(orig2, date, destination, token);
 
-    // Call API, JSONify result and assign result.data to flightData
-    let flightData = await callAPI(url1, url2, dest);
-    allflights.push(flightData);
-    console.log(flightData);
+      // Call API, JSONify result and assign result.data to flightData
+      let flightData = await callAPI(url1, url2, destination);
+      allflights.push(flightData);
 
-    // If data found push it to results array, else tell the console nothing found
-    if (!flightData.Success){
-      console.log('missing data for', dest.toUpperCase());
-      notfound.push(" " + dest.toUpperCase());
-    } else {
-      console.log('found flights to', dest.toUpperCase());
-      found.push(" " + dest.toUpperCase());
-    }
-  }
+      // If data found push it to results array, else tell the console nothing found
+      if (!flightData.Success){
+        notfound.push(" " + destination.toUpperCase());
+      } else {
+        found.push(" " + destination.toUpperCase());
+      }
+    })
+  );
 
-  return {allflights, found, notfound}
+  return {allflights, found, notfound};
 };
 
 function createURL(orig, date, dest, token){

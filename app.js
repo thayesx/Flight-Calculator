@@ -43,7 +43,7 @@ app.get('/search?', async (req, res) => {
 
     // Render view with data returned from API
     res.render('layouts/main', {
-      header: 'Results for flying from ' + orig1 + ' and ' + orig2,
+      header: 'Results for flying from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
       searchResults: JSON.stringify(data.allflights, null, 4), 
       found: 'Found info on flights to ' + data.found, 
       notfound: 'Couldn\'t find info for flights to ' + data.notfound
@@ -107,7 +107,7 @@ async function callAPI(url1, url2, dest){
 
   // Get flight data from result of API call
   if (flightJSON1.data.length == 0 || flightJSON2.data.length == 0){
-    var Price = 'Missing data';
+    var Price = 'Incomplete price data';
     var Destination = dest.toUpperCase();
     var Success = false;
   } else {

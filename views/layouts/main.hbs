@@ -5,6 +5,7 @@
   <meta name="viewport" content="initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>flight calculator</title>
+  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="calculator.js"></script>
@@ -16,9 +17,18 @@
     <input type="text" id="origin1" placeholder="RDU">
     <input type="text" id="origin2" placeholder="SFO">
   </div>
-  <button onclick="run()">Run shit</button>
+  <button onclick="run()">Find flights</button>
   <h4 id="found">{{ found }}</h4>
   <h4 id="notfound">{{ notfound }}</h4>
-  <p id="results">{{ searchResults }}</p>
+  
+  <ul class="searchResults">
+    {{#each searchResults}}
+      <li>
+        <span class="destination">{{ destination }}:</span>
+        <span class="price">{{ price }}</span>
+      </li>
+    {{/each}}
+  </ul>
+
 </body>
 </html>

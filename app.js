@@ -44,7 +44,8 @@ app.get('/search?', async (req, res) => {
     // Render view with data returned from API
     res.render('layouts/main', {
       header: 'Results for flying from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
-      searchResults: JSON.stringify(data.allflights, null, 4), 
+      // searchResults: {searchResults: [JSON.stringify(data.allflights, null, 4)]},
+      searchResults: data.basicflights,
       found: 'Found info on flights to ' + data.found, 
       notfound: 'Couldn\'t find info for flights to ' + data.notfound
     });
@@ -63,6 +64,7 @@ async function getFlightData(orig1, orig2, date, destinations, token) {
 
   // Reset arrays for results
   let allflights = [];
+  let basicflights = [];
   let found = [];
   let notfound = [];
 
@@ -78,6 +80,7 @@ async function getFlightData(orig1, orig2, date, destinations, token) {
       // Call API, JSONify result and assign result.data to flightData
       let flightData = await callAPI(url1, url2, destination);
       allflights.push(flightData);
+      basicflights.push({'destination': flightData.Destination, 'price': flightData.Price});
 
       // If data found push it to results array, else tell the console nothing found
       if (!flightData.Success){
@@ -88,7 +91,8 @@ async function getFlightData(orig1, orig2, date, destinations, token) {
     })
   );
 
-  return {allflights, found, notfound};
+  console.log('basicFlights', basicflights);
+  return {allflights, basicflights, found, notfound};
 };
 
 function createURL(orig, date, dest, token){

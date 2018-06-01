@@ -8,7 +8,7 @@ function getVars(){
   return `http://localhost:5000/search?origin1=${origin1}&origin2=${origin2}&date=${date}`;
 };
 
-function run(){
+function runSearch(){
   let searchURL = getVars();
   
   // Update DOM

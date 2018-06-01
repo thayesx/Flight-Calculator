@@ -5,7 +5,7 @@
   <meta name="viewport" content="initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>flight calculator</title>
-  <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,600" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <script src="calculator.js"></script>
@@ -13,32 +13,36 @@
 <body>
   <div class="container">
     <h1 id="header">{{ header }}</h1>
+    <h3 id="subheader">{{ subheader }}</h1>
     <div class="inputs">
       <input type="text" id="date" placeholder="yyyy-mm-dd">
       <input type="text" id="origin1" placeholder="RDU">
       <input type="text" id="origin2" placeholder="SFO">
-    </div>
-
-    <button onclick="runSearch()" id="search">Find flights</button>
-
-    <div class="status">
-      <h4><span>{{ status1 }}</span>{{ found }}</h4>
-      <h4><span>{{ status2 }}</span>{{ notfound }}</h4>
+      <button onclick="runSearch()" id="search">Find flights</button>
     </div>
     
-    <ul class="flightResults">
+    <div class="status">
+      <h4 id="found">{{ found }}</h4>
+      <h4 id="notfound">{{ notfound }}</h4>
+    </div>
+    
+    <ul id="flightResults">
       {{#each flightResults}}
         {{#if success}}
-          <li class="success">
-            <span class="destination">{{ destination }}:</span>
+          <li class="success" href="{{ link }}">
+            <span class="destination">To {{ destination }}:</span>
             <span class="price">{{ price }}</span>
-          </li>
-        {{else}}
-          <li class="failed">
-            <span class="destination">{{ destination }}:</span>
-            <span class="price">{{ price }}</span>
+            <span class="button">View flights</span>
           </li>
         {{/if}}
+      {{/each}}
+      {{#each flightResults}}
+        {{#unless success}}
+          <li class="failed" href="{{ link }}">
+            <span class="destination">To {{ destination }}:</span>
+            <span class="price">{{ price }}</span>
+          </li>
+        {{/unless}}
       {{/each}}
     </ul>
   </div>

@@ -20,7 +20,8 @@ app.listen(port, () =>{
 // Main route
 app.get('/', (req, res) => {
   res.render('layouts/main', {
-    header: 'Choose two airports to fly from + the date'
+    header: 'The cheapest places to meet up',
+    subheader: 'Choose two airports to fly out of, pick a month, and find the cheapest airports for you both to fly to'
   });
 });
 
@@ -47,7 +48,8 @@ app.get('/search?', async (req, res) => {
 
     // Render view with data returned from API
     res.render('layouts/main', {
-      header: 'Results for flying from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
+      header: 'Results',
+      subheader: 'Places to fly from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
       flightResults: data.flightResults,
       found: 'Found info on flights to ' + data.found, 
       notfound: 'Couldn\'t find info for flights to ' + data.notfound
@@ -55,6 +57,26 @@ app.get('/search?', async (req, res) => {
   } catch (err) {
     console.log('error:', err);
   }
+});
+
+// Render fake data without needing to call API
+app.get('/dev', async (req, res) => {
+  let testResults =[
+    {'success': true, 'destination': 'ATL', 'price': '$250.59'},
+    {'success': true, 'destination': 'DEN', 'price': '$344.12'},
+    {'success': false, 'destination': 'LAX', 'price': 'Missing data'},
+    {'success': false, 'destination': 'LAS', 'price': 'Missing data'},
+    {'success': true, 'destination': 'DFW', 'price': '$509.91'},
+    {'success': false, 'destination': 'SEA', 'price': 'Missing data'},
+    {'success': true, 'destination': 'MIA', 'price': '$630.34'},
+  ];
+
+  res.render('layouts/main', {
+    header: 'Places to fly from RDU and JFK in the month of 2018-08-01',
+    flightResults: testResults,
+    found: 'Found info on flights to ATL, DEN, DFW, MIA', 
+    notfound: 'Couldn\'t find info for flights to LAX, LAS, SEA'
+  });
 });
 
 // Get flight info from origins to each destination in destinations

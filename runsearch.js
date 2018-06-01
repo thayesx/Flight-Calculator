@@ -1,3 +1,9 @@
+let baseURL;
+
+$(document).ready(() => {
+  baseURL = location.origin;
+});
+
 // Define variables
 function getVars(){
   origin1 = $('#origin1')[0].value.toUpperCase();
@@ -5,7 +11,7 @@ function getVars(){
   date = $('#date')[0].value;
   
   // Create flight search URL
-  return `http://localhost:5000/search?origin1=${origin1}&origin2=${origin2}&date=${date}`;
+  return `${baseURL}/search?origin1=${origin1}&origin2=${origin2}&date=${date}`;
 };
 
 function runSearch(){

@@ -11,24 +11,36 @@
   <script src="calculator.js"></script>
 </head>
 <body>
-  <h1 id="header">{{ header }}</h1>
-  <div class="inputs">
-    <input type="text" id="date" placeholder="yyyy-mm-dd">
-    <input type="text" id="origin1" placeholder="RDU">
-    <input type="text" id="origin2" placeholder="SFO">
-  </div>
-  <button onclick="runSearch()" id="search">Find flights</button>
-  <h4 class="status"><span>{{ status1 }}</span>{{ found }}</h4>
-  <h4 class="status"><span>{{ status2 }}</span>{{ notfound }}</h4>
-  
-  <ul class="flightResults">
-    {{#each flightResults}}
-      <li>
-        <span class="destination">{{ destination }}:</span>
-        <span class="price">{{ price }}</span>
-      </li>
-    {{/each}}
-  </ul>
+  <div class="container">
+    <h1 id="header">{{ header }}</h1>
+    <div class="inputs">
+      <input type="text" id="date" placeholder="yyyy-mm-dd">
+      <input type="text" id="origin1" placeholder="RDU">
+      <input type="text" id="origin2" placeholder="SFO">
+    </div>
 
+    <button onclick="runSearch()" id="search">Find flights</button>
+
+    <div class="status">
+      <h4><span>{{ status1 }}</span>{{ found }}</h4>
+      <h4><span>{{ status2 }}</span>{{ notfound }}</h4>
+    </div>
+    
+    <ul class="flightResults">
+      {{#each flightResults}}
+        {{#if success}}
+          <li class="success">
+            <span class="destination">{{ destination }}:</span>
+            <span class="price">{{ price }}</span>
+          </li>
+        {{else}}
+          <li class="failed">
+            <span class="destination">{{ destination }}:</span>
+            <span class="price">{{ price }}</span>
+          </li>
+        {{/if}}
+      {{/each}}
+    </ul>
+  </div>
 </body>
 </html>

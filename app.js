@@ -12,6 +12,11 @@ app.engine('hbs', exphbs({
 }));
 app.set('view engine', 'hbs');
 
+// Server listen
+app.listen(port, () =>{
+  console.log(`Server started on ${port}`);
+});
+
 // Main route
 app.get('/', (req, res) => {
   res.render('layouts/main', {
@@ -52,11 +57,6 @@ app.get('/search?', async (req, res) => {
   }
 });
 
-// Start server
-app.listen(port, () =>{
-  console.log(`Server started on ${port}`);
-});
-
 // Get flight info from origins to each destination in destinations
 async function getFlightData(orig1, orig2, date, destinations, token) {
 
@@ -76,7 +76,7 @@ async function getFlightData(orig1, orig2, date, destinations, token) {
 
       // Call API, JSONify result and assign result.data to flightData
       let flightData = await callAPI(url1, url2, destination);
-      flightResults.push({'destination': flightData.Destination, 'price': flightData.Price});
+      flightResults.push({'success': flightData.Success, 'destination': flightData.Destination, 'price': flightData.Price});
 
       // If data found push it to results array, else tell the console nothing found
       if (!flightData.Success){
@@ -106,8 +106,13 @@ async function callAPI(url1, url2, dest){
   let flightJSON2 = await flight2.json(); console.log('jsonify2', flightJSON2);
 
   // Get flight data from result of API call
-  if (flightJSON1.data.length == 0 || flightJSON2.data.length == 0){
-    var Price = 'Incomplete price data';
+  if (flightJSON1.data.length == 0 && flightJSON2.data.length == 0){
+    var Price = "No flight data found.";
+    var Destination = dest.toUpperCase();
+    var Success = false;
+  }
+  else if (flightJSON1.data.length == 0 || flightJSON2.data.length == 0){
+    var Price = "Missing data from one origin.";
     var Destination = dest.toUpperCase();
     var Success = false;
   } else {
@@ -119,9 +124,3 @@ async function callAPI(url1, url2, dest){
   
   return {Success, Destination: Destination, Price: Price};
 }
-
-  // All possible destinations
-  const destinations = ['atl', 'den', 'dfw', 'mia', 'lax', 'las', 'sea', 
-                      'clt', 'mco', 'phx', 'ewr', 'iah', 'bos', 'msp', 
-                      'dtw', 'phl', 'lga', 'fll', 'bwi', 'dca', 'slc', 
-                      'mdw', 'iad', 'san', 'hnl', 'tpa', 'pdx'];

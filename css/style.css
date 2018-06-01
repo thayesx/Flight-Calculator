@@ -1,7 +1,25 @@
+* {
+  margin: 0;
+  padding: 0; }
+
 body {
   font-family: 'Rubik', sans-serif;
-}
+  background: lightseagreen; }
 
-#results {
-  white-space: pre-wrap;
-}
+.container {
+  padding: 10%;
+  width: 80%;
+  margin: 0 auto; }
+
+.status h4 {
+  font-size: 18px; }
+
+ul {
+  margin: 40px auto;
+  width: 60%;
+  list-style-type: none; }
+  ul li {
+    background: white;
+    border-radius: 10px;
+    margin: 10px auto;
+    padding: 10px; }

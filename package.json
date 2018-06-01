@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon"
+    "start": "nodemon & node-sass --watch scss -o css"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +15,7 @@
     "handlebars": "^4.0.11",
     "jquery": "^3.3.1",
     "node-fetch": "^2.1.2",
-    "nodemon": "^1.17.4",
+    "node-sass": "^4.9.0",
     "whatwg-fetch": "^2.0.4"
   }
 }

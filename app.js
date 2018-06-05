@@ -4,6 +4,12 @@ const exphbs = require('express-handlebars');
 const port = process.env.PORT || 5000;
 const app = express();
 
+var inputData = {
+  date: '',
+  origin1: '',
+  origin2: ''
+};
+
 app.use(express.static("."));
 
 // Handlebars Middleware
@@ -52,7 +58,10 @@ app.get('/search?', async (req, res) => {
       subheader: 'Places to fly from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
       flightResults: data.flightResults,
       found: 'Found info on flights to ' + data.found, 
-      notfound: 'Couldn\'t find info for flights to ' + data.notfound
+      notfound: 'Couldn\'t find info for flights to ' + data.notfound,
+      inputDate: date,
+      inputOrigin1: orig1,
+      inputOrigin2: orig2
     });
   } catch (err) {
     console.log('error:', err);

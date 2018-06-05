@@ -15,9 +15,9 @@
     <h1 id="header">{{ header }}</h1>
     <h3 id="subheader">{{ subheader }}</h1>
     <div class="inputs">
-      <input type="text" id="date" placeholder="yyyy-mm-dd">
-      <input type="text" id="origin1" placeholder="RDU">
-      <input type="text" id="origin2" placeholder="SFO">
+      <input type="text" id="date" placeholder="yyyy-mm-dd" value="{{ inputDate }}">
+      <input type="text" id="origin1" placeholder="RDU" value="{{ inputOrigin1 }}">
+      <input type="text" id="origin2" placeholder="SFO" value="{{ inputOrigin2 }}">
       <button onclick="runSearch()" id="search">Find flights</button>
     </div>
     

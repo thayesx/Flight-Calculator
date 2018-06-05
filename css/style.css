@@ -25,7 +25,8 @@ body {
       border-radius: 10px;
       border: none;
       font-size: 18px;
-      margin-right: 8px; }
+      margin-right: 8px;
+      text-transform: uppercase; }
     .container .inputs input:focus {
       outline: none; }
     .container .inputs button {

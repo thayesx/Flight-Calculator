@@ -1,6 +1,7 @@
 // Variables
 $font: 'Rubik', sans-serif;
 
+// Global reset margins + padding
 * {
   margin: 0;
   padding: 0;
@@ -29,6 +30,7 @@ body {
       border: none;
       font-size: 18px;
       margin-right: 8px;
+      text-transform: uppercase;
     }
     input:focus {
       outline: none;

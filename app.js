@@ -26,8 +26,8 @@ app.listen(port, () =>{
 // Main route
 app.get('/', (req, res) => {
   res.render('layouts/main', {
-    header: 'The cheapest places to meet up',
-    subheader: 'Choose two airports to fly out of, pick a month, and find the cheapest airports for you both to fly to'
+    header: 'Meet in the middle',
+    subheader: 'Pick two airports for you and a friend to fly out of, and see the cheapest places to meet up.'
   });
 });
 
@@ -54,11 +54,11 @@ app.get('/search?', async (req, res) => {
 
     // Render view with data returned from API
     res.render('layouts/main', {
-      header: 'Results',
-      subheader: 'Places to fly from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
+      header: 'Get going!',
+      subheader: 'Check out these combined costs for flying to places from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
       flightResults: data.flightResults,
-      found: 'Found info on flights to ' + data.found, 
-      notfound: 'Couldn\'t find info for flights to ' + data.notfound,
+      found: 'Found prices for flights to... ' + data.found, 
+      notfound: 'Missing info on flights to... ' + data.notfound,
       inputDate: date,
       inputOrigin1: orig1,
       inputOrigin2: orig2
@@ -81,10 +81,11 @@ app.get('/dev', async (req, res) => {
   ];
 
   res.render('layouts/main', {
-    header: 'Places to fly from RDU and JFK in the month of 2018-08-01',
+    header: 'Get going!',
+    subheader: 'Check out these combined costs for flying to places from RDU and SFO in the month of 2018-08-01',
     flightResults: testResults,
-    found: 'Found info on flights to ATL, DEN, DFW, MIA', 
-    notfound: 'Couldn\'t find info for flights to LAX, LAS, SEA'
+    found: 'Found prices for flights to... ATL, DEN, DFW, MIA', 
+    notfound: 'Missing info on flights to... LAX, LAS, SEA'
   });
 });
 

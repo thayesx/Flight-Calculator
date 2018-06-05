@@ -3,8 +3,11 @@
   padding: 0; }
 
 body {
-  font-family: "Rubik", sans-serif;
+  font-family: "Muli", sans-serif;
   background: #aff0f0; }
+
+h3 {
+  font-size: 17px; }
 
 .container {
   padding-top: 80px;
@@ -14,30 +17,57 @@ body {
   vertical-align: middle; }
   @media screen and (max-width: 480px) {
     .container {
-      padding-top: 5vh;
+      padding-top: 4vh;
       width: 90%;
       text-align: left;
       float: none; } }
 
 #header {
-  font-weight: 600;
-  font-size: 36px;
+  font-weight: 800;
+  font-size: 48px;
   margin: 20px 0; }
   @media screen and (max-width: 480px) {
     #header {
-      font-size: 30px; } }
+      font-size: 36px; } }
 
 #subheader {
   font-weight: 400; }
 
 .inputs {
-  margin: 40px 0;
+  margin: 64px 0;
   text-align: center; }
+  @media screen and (max-width: 480px) {
+    .inputs {
+      margin: 24px 0;
+      text-align: left; } }
+  .inputs .date, .inputs .origin1, .inputs .origin2 {
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 24px; }
+    @media screen and (max-width: 1100px) {
+      .inputs .date, .inputs .origin1, .inputs .origin2 {
+        min-width: 200px; } }
+    @media screen and (max-width: 480px) {
+      .inputs .date, .inputs .origin1, .inputs .origin2 {
+        width: 100%;
+        margin: 0; } }
+  .inputs h3 {
+    margin-bottom: 4px; }
+    @media screen and (max-width: 480px) {
+      .inputs h3 {
+        margin: 12px 0 2px; } }
+  .inputs .origin2 h3 {
+    display: inline-block;
+    margin-right: 8px; }
+    @media screen and (max-width: 480px) {
+      .inputs .origin2 h3 {
+        width: 100%;
+        margin: 0; } }
   .inputs input, .inputs button {
     padding: 16px 8px;
     border-radius: 10px;
     border: none;
-    font-size: 18px;
+    font-size: 17px;
     margin-right: 8px;
     text-transform: uppercase; }
     @media screen and (max-width: 480px) {
@@ -47,32 +77,37 @@ body {
   .inputs input:focus {
     outline: none; }
   .inputs button {
-    letter-spacing: 1px;
-    font-weight: 600;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
     background-color: #1e3dec;
-    color: white; }
+    color: white;
+    margin-right: none; }
+    @media screen and (max-width: 1100px) {
+      .inputs button {
+        width: auto; } }
     @media screen and (max-width: 480px) {
       .inputs button {
         padding-left: 24px;
         padding-right: 24px;
-        width: auto; } }
+        width: auto;
+        margin-bottom: 32px; } }
     .inputs button:hover {
       cursor: pointer;
       opacity: .92; }
 
-.status h4 {
-  font-size: 18px;
-  font-weight: 300;
-  text-align: center;
-  margin: 4px 0; }
-
 #flightResults {
   text-align: left;
   font-size: 20px;
-  margin: 40px auto;
-  width: 60%;
-  list-style-type: none; }
+  margin: 32px auto;
+  list-style-type: none;
+  width: 60%; }
+  #flightResults .status > p {
+    font-size: 14px;
+    text-align: left;
+    padding-bottom: 12px; }
+  @media screen and (max-width: 1100px) {
+    #flightResults {
+      width: 80%; } }
   @media screen and (max-width: 480px) {
     #flightResults {
       width: 100%; } }
@@ -84,9 +119,8 @@ body {
   #flightResults li.success {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16); }
     #flightResults li.success .destination {
-      font-weight: 600; }
+      font-weight: 800; }
     #flightResults li.success .price {
-      font-weight: 300;
       margin-left: 10px; }
     #flightResults li.success .button {
       display: block;
@@ -101,7 +135,6 @@ body {
       #flightResults li.success:hover .button {
         visibility: visible; }
   #flightResults li.failed {
-    background: rgba(255, 255, 255, 0.6); }
+    background: rgba(255, 255, 255, 0.7); }
     #flightResults li.failed .price {
-      opacity: .6;
-      margin-left: 10px; }
+      opacity: .7; }

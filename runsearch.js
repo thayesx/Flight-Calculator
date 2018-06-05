@@ -18,11 +18,11 @@ function runSearch(){
   let searchURL = getVars();
   
   // Update DOM
-  $('#header')[0].innerHTML = `Searching...`;
-  $('#subheader')[0].innerHTML = `Getting info on flights from ${origin1} and ${origin2} for the month of ${date}...`;
+  $('#header')[0].innerHTML = `One sec...`;
+  $('#subheader')[0].innerHTML = `Finding the cheapest places to meet up when flying from ${origin1} and ${origin2} in the month of ${date}...`;
   $('#flightResults')[0].innerHTML = '';
-  $('#found')[0].innerHTML = '';
-  $('#notfound')[0].innerHTML = '';
+  $('#found').innerHTML = '';
+  $('#notfound').innerHTML = '';
   
   // call server
   location.replace(searchURL);

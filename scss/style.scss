@@ -1,11 +1,31 @@
-// Variables
-$font: 'Rubik', sans-serif;
+////////////////////////////////////////////////////////////////
+// Stylesheet for FlightCalculator
+// Author: Tyler Hayes
+////////////////////////////////////////////////////////////////
 
 // Global reset margins + padding
 * {
   margin: 0;
   padding: 0;
 }
+
+// Responsive styling
+@mixin breakpoint($point) {
+  @if $point == m {
+    @media screen and (max-width: 1024px){@content;}
+  }
+  @if $point == s {
+    @media screen and (max-width: 480px){@content;}
+  }
+}
+
+// Global style variables
+$font: 'Rubik', sans-serif;
+$primaryColor: rgb(30, 61, 236);
+@mixin textPadding(){padding: 16px 8px;}
+@mixin borderRadius(){border-radius: 10px;}
+
+////////////////////////////////////////////////////////////////
 
 body {
   font-family: $font;
@@ -14,90 +34,100 @@ body {
 
 .container {
   padding-top: 80px; width: 80%; margin: 0 auto; text-align: center; vertical-align: middle;
-  #header {
+  @include breakpoint(s){padding-top: 5vh; width: 90%; text-align: left; float: none;}
+}
+
+#header {
+  font-weight: 600;
+  font-size: 36px;
+  margin: 20px 0;
+  @include breakpoint(s){font-size: 30px;}
+}
+
+#subheader {
+  font-weight: 400;
+}
+
+.inputs {
+  margin: 40px 0; text-align: center;
+  input, button {
+    @include textPadding();
+    @include borderRadius();
+    border: none;
+    font-size: 18px;
+    margin-right: 8px;
+    text-transform: uppercase;
+    @include breakpoint(s){margin: 8px 0; width: 80%;}
+  }
+  input:focus {
+    outline: none;
+  }
+  button {
+    letter-spacing: 1px;
     font-weight: 600;
-    font-size: 36px;
-    margin: 20px 0;
-  }
-  #subheader {
-    font-weight: 400;
-  }
-  .inputs {
-    margin: 40px 0;
-    input, button {
-      padding: 16px 8px;
-      border-radius: 10px;
-      border: none;
-      font-size: 18px;
-      margin-right: 8px;
-      text-transform: uppercase;
+    text-transform: uppercase;
+    background-color: $primaryColor;
+    color: white;
+    @include breakpoint(s){padding-left: 24px; padding-right: 24px; width: auto;}
+    &:hover {
+      cursor: pointer;
+      opacity: .92;
     }
-    input:focus {
-      outline: none;
-    }
-    button {
-      padding: 16px;
-      letter-spacing: 1px;
+  }
+}
+
+.status {
+  h4 {
+    font-size: 18px;
+    font-weight: 300;
+    text-align: center;
+    margin: 4px 0;
+  }
+}
+
+#flightResults {
+  text-align: left;
+  font-size: 20px;
+  margin: 40px auto;
+  width: 60%;
+  list-style-type: none;
+  @include breakpoint(s){width: 100%;}
+  li {
+    background: white;
+    border-radius: 10px;
+    margin: 10px auto;
+    padding: 16px;
+  }
+  li.success {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+    .destination {
       font-weight: 600;
-      text-transform: uppercase;
-      background-color: rgb(30, 61, 236);
-      color: white;
-      &:hover {
-        cursor: pointer;
-        opacity: .92;
-      }
     }
-  }
-  .status {
-    h4 {
-      font-size: 18px;
+    .price {
       font-weight: 300;
-      text-align: center;
-      margin: 4px 0;
+      margin-left: 10px;
+    }
+    .button {
+      display: block;
+      float: right;
+      color: $primaryColor;
+      font-size: 16px;
+      padding: 4px;
+      visibility: hidden;
+    }
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24);
+      .button {
+        visibility: visible;
+      }
     }
   }
-  #flightResults {
-    text-align: left;
-    font-size: 20px;
-    margin: 40px auto;
-    width: 60%;
-    list-style-type: none;
-    li {
-      background: white;
-      border-radius: 10px;
-      margin: 10px auto;
-      padding: 16px;
-    }
-    li.success {
-      .destination {
-        font-weight: 600;
-      }
-      .price {
-        font-weight: 300;
-        margin-left: 10px;
-      }
-      .button {
-        display: block;
-        float: right;
-        color: rgb(30, 61, 236);
-        font-size: 16px;
-        padding: 4px;
-        visibility: hidden;
-      }
-      &:hover {
-        cursor: pointer;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
-        .button {
-          visibility: visible;
-        }
-      }
-    }
-    li.failed {
-      background: rgba(255, 255, 255, 0.6);
-      .price {
-        opacity: .6;
-        margin-left: 10px;
-      }
+  li.failed {
+    background: rgba(255, 255, 255, 0.6);
+    .price {
+      opacity: .6;
+      margin-left: 10px;
     }
   }
 }

@@ -10,6 +10,8 @@ var inputData = {
   origin2: ''
 };
 
+var airportList = require('./airportList.json');
+
 app.use(express.static("."));
 
 // Handlebars Middleware
@@ -40,10 +42,8 @@ app.get('/search?', async (req, res) => {
   let date = req.query.date;
 
   // All possible destinations
-  const destinations = ['atl', 'den', 'dfw', 'mia', 'lax', 'las', 'sea', 
-                      'clt', 'mco', 'phx', 'ewr', 'iah', 'bos', 'msp', 
-                      'dtw', 'phl', 'lga', 'fll', 'bwi', 'dca', 'slc', 
-                      'mdw', 'iad', 'san', 'hnl', 'tpa', 'pdx'];
+  const destinations = airportList;
+  console.log('destinations', destinations);
 
   // API token
   const token = 'b5160be6c1e24942d2978e5e5c607439';
@@ -101,20 +101,21 @@ async function getFlightData(orig1, orig2, date, destinations, token) {
   await Promise.all(
     // For each destination in destinations array
     destinations.map( async (destination) => {
+			console.log(destination);
 
       // Create URLs
-      let url1 = createURL(orig1, date, destination, token);
-      let url2 = createURL(orig2, date, destination, token);
+      let url1 = createURL(orig1, date, destination.code, token);
+      let url2 = createURL(orig2, date, destination.code, token);
 
       // Call API, JSONify result and assign result.data to flightData
-      let flightData = await callAPI(url1, url2, destination);
+      let flightData = await callAPI(url1, url2, destination.code);
       flightResults.push({'success': flightData.Success, 'destination': flightData.Destination, 'price': flightData.Price});
 
       // If data found push it to results array, else tell the console nothing found
       if (!flightData.Success){
-        notfound.push(" " + destination.toUpperCase());
+        notfound.push(" " + destination.code);
       } else {
-        found.push(" " + destination.toUpperCase());
+        found.push(" " + destination.code);
       }
     })
   );
@@ -130,22 +131,22 @@ function createURL(orig, date, dest, token){
 
 async function callAPI(url1, url2, dest){
   // Call API and assign result to var flight
-  let flight1 = await fetch(url1); console.log('apicall1');
-  let flight2 = await fetch(url2); console.log('apicall2');
+  let flight1 = await fetch(url1);
+  let flight2 = await fetch(url2);
 
   // JSONify result of API call
-  let flightJSON1 = await flight1.json(); console.log('jsonify1', flightJSON1);
-  let flightJSON2 = await flight2.json(); console.log('jsonify2', flightJSON2);
+  let flightJSON1 = await flight1.json();
+  let flightJSON2 = await flight2.json();
 
   // Get flight data from result of API call
   if (flightJSON1.data.length == 0 && flightJSON2.data.length == 0){
     var Price = "No flight data found.";
-    var Destination = dest.toUpperCase();
+    var Destination = dest;
     var Success = false;
   }
   else if (flightJSON1.data.length == 0 || flightJSON2.data.length == 0){
     var Price = "Missing data from one origin.";
-    var Destination = dest.toUpperCase();
+    var Destination = dest;
     var Success = false;
   } else {
     var Price = flightJSON1.data[0].value + flightJSON2.data[0].value;

@@ -98,17 +98,16 @@ async function handleFlightResults(orig1, orig2, date, destinations, token) {
 			// For each destination in destinations array
 			destinations.map(async destination => {
 				try {
-					console.log('destination in handleFlightResults:', destination);
 					// Create URLs
 					let url1 = createURL(orig1, date, destination.code, token);
 					let url2 = createURL(orig2, date, destination.code, token);
 		
-					console.log('url1', url1);
-					console.log('url2', url2);
-		
 					// Call API, JSONify result and assign result.data to flightData
 					let flightData = await getFlightData(url1, url2, destination.code)
-					flightResults.push({'success': flightData.Success, 'destination': flightData.Destination, 'price': flightData.Price});
+					flightResults.push({'success': flightData.Success, 
+															'destination': flightData.Destination, 
+															'price': flightData.Price, 
+															'details': flightData.Details});
 		
 					// If data found push it to results array, else tell the console nothing found
 					if (!flightData.Success){
@@ -119,18 +118,16 @@ async function handleFlightResults(orig1, orig2, date, destinations, token) {
 				} catch(err){console.log('Error mapping ' + destination.code + ': ', err)}
 			})
 		);
+		console.log('flightResults', flightResults);
 		return {flightResults, found, notfound};	
 	} catch(err){console.log('Error handling flight results', err)}
 };
 
 async function getFlightData(url1, url2, dest){
-	console.log('run getFlightData');
 	// Get flight info from API from each origin
 	try {
 		let flightJSON1 = await callAPI(url1);
 		let flightJSON2 = await callAPI(url2);
-		console.log('flightJSON1', flightJSON1);
-		console.log('flightJSON2', flightJSON2);
 	
 		// Get flight data from result of API call
 		if (flightJSON1.data.length == 0 && flightJSON2.data.length == 0){
@@ -144,17 +141,22 @@ async function getFlightData(url1, url2, dest){
 			var Success = false;
 		} else {
 			var Price = flightJSON1.data[0].value + flightJSON2.data[0].value;
-			Price = '$' + Price.toFixed(2);
+			Price = '$' + Math.round(Price);
 			var Destination = flightJSON1.data[0].destination;
+			var Details = [
+				{origin: "from " + flightJSON1.data[0].origin,
+				price: '$' + Math.round(flightJSON1.data[0].value)},
+				{origin: "from " + flightJSON2.data[0].origin,
+				price: '$' + Math.round(flightJSON2.data[0].value)}
+			];
 			var Success = true;
 		}
-		const flightData = {Success, Destination: Destination, Price: Price}
+		const flightData = {Success, Destination: Destination, Price: Price, Details: Details}
 		return flightData;
 	} catch(err){console.log('getFlightData error', err)};
 }
 
 async function callAPI(url){
-	console.log('callAPI', url);
 	let promise = await fetch(url);
 	let flightJSON = await promise.json();
 	return flightJSON;

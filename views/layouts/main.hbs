@@ -41,6 +41,11 @@
           <li class="success" href="{{ link }}">
             <span class="destination">To {{ destination }}:</span>
             <span class="price">{{ price }}</span>
+						<div class="details">
+							{{#each details}}
+							<span>{{ origin }}: {{ price }}</span><br>
+							{{/each}}
+						</div>
             <span class="button">View flights</span>
           </li>
         {{/if}}

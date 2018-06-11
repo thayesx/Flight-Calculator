@@ -119,15 +119,21 @@ h3 {
   #flightResults li.success {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16); }
     #flightResults li.success .destination {
-      font-weight: 800; }
+      font-weight: 800;
+      float: left; }
     #flightResults li.success .price {
-      margin-left: 10px; }
+      margin-left: 10px;
+      float: left; }
+    #flightResults li.success .details {
+      margin-left: 24px;
+      font-size: 14px;
+      opacity: .7;
+      display: inline-block; }
     #flightResults li.success .button {
       display: block;
       float: right;
       color: #1e3dec;
-      font-size: 16px;
-      padding: 4px;
+      font-size: 17px;
       visibility: hidden; }
     #flightResults li.success:hover {
       cursor: pointer;

@@ -123,13 +123,14 @@ h3 {
     .destination {
 			@include fontBold();
 			float: left;
+			margin-left: 6px;
     }
     .price {
-			margin-left: 10px;
+			@include fontBold();
 			float: left;
 		}
 		.details {
-			margin-left: 24px;
+			margin-left: 10px;
 			font-size: 14px;
 			opacity: .7;
 			display: inline-block;
@@ -152,7 +153,8 @@ h3 {
   li.failed {
     background: rgba(255, 255, 255, 0.7);
     .price {
-      opacity: .7;
+			opacity: .7;
+			font-size: 14px;
     }
   }
 }

@@ -27,3 +27,7 @@ function runSearch(){
   // call server
   location.replace(searchURL);
 };
+
+function home(){
+	location.replace(baseURL);
+};

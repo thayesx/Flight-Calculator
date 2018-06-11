@@ -120,12 +120,13 @@ h3 {
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16); }
     #flightResults li.success .destination {
       font-weight: 800;
-      float: left; }
+      float: left;
+      margin-left: 6px; }
     #flightResults li.success .price {
-      margin-left: 10px;
+      font-weight: 800;
       float: left; }
     #flightResults li.success .details {
-      margin-left: 24px;
+      margin-left: 10px;
       font-size: 14px;
       opacity: .7;
       display: inline-block; }
@@ -143,4 +144,5 @@ h3 {
   #flightResults li.failed {
     background: rgba(255, 255, 255, 0.7); }
     #flightResults li.failed .price {
-      opacity: .7; }
+      opacity: .7;
+      font-size: 14px; }

@@ -29,7 +29,7 @@ app.listen(port, () =>{
 app.get('/', (req, res) => {
 	res.render('layouts/main', {
 		header: 'Meet in the middle',
-		subheader: 'Pick two airports for you and a friend to fly out of, and see the cheapest places to meet up.'
+		subheader: 'Pick a month and two airports for you and a friend to fly out of, and see the cheapest places to meet up.'
 	});
 });
 
@@ -52,7 +52,7 @@ app.get('/search?', (req, res) => {
 	// Render view with data returned from API
 	.then((results) => {res.render('layouts/main', {
 			header: 'Get going!',
-			subheader: 'Check out these combined costs for flying to places from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
+			subheader: 'Found these prices for flying to places from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
 			flightResults: results.flightResults,
 			found: 'Found prices for flights to... ' + results.found, 
 			notfound: 'Missing info on flights to... ' + results.notfound,
@@ -60,7 +60,8 @@ app.get('/search?', (req, res) => {
 			inputOrigin1: orig1,
 			inputOrigin2: orig2
 		})
-	});
+	})
+	.catch(err => console.log('Error in GET route', err));
 });
 
 // Render fake data without needing to call API
@@ -97,20 +98,21 @@ async function handleFlightResults(orig1, orig2, date, destinations, token) {
 		await Promise.all(
 			// For each destination in destinations array
 			destinations.map(async destination => {
+				
 				try {
 					// Create URLs
 					let url1 = createURL(orig1, date, destination.code, token);
 					let url2 = createURL(orig2, date, destination.code, token);
 		
 					// Call API, JSONify result and assign result.data to flightData
-					let flightData = await getFlightData(url1, url2, destination.code)
-					flightResults.push({'success': flightData.Success, 
-															'destination': flightData.Destination, 
-															'price': flightData.Price, 
-															'details': flightData.Details});
+					let flightData = await getFlightData(url1, url2);
+					flightResults.push({'success': flightData.success, 
+															'destination': destination.city, 
+															'price': flightData.price, 
+															'details': flightData.details});
 		
 					// If data found push it to results array, else tell the console nothing found
-					if (!flightData.Success){
+					if (!flightData.success){
 						notfound.push(" " + destination.code);
 					} else {
 						found.push(" " + destination.code);
@@ -118,40 +120,40 @@ async function handleFlightResults(orig1, orig2, date, destinations, token) {
 				} catch(err){console.log('Error mapping ' + destination.code + ': ', err)}
 			})
 		);
-		console.log('flightResults', flightResults);
+		// console.log('flightResults', flightResults);
 		return {flightResults, found, notfound};	
 	} catch(err){console.log('Error handling flight results', err)}
 };
 
-async function getFlightData(url1, url2, dest){
-	// Get flight info from API from each origin
+async function getFlightData(url1, url2){
+
 	try {
-		let flightJSON1 = await callAPI(url1);
-		let flightJSON2 = await callAPI(url2);
+		// Get flight info from API from each origin and initialize variables
+		let flight1 = await callAPI(url1);
+		let flight2 = await callAPI(url2);
+
+		var success;
+		var price;
 	
 		// Get flight data from result of API call
-		if (flightJSON1.data.length == 0 && flightJSON2.data.length == 0){
-			var Price = "No flight data found.";
-			var Destination = dest;
-			var Success = false;
+		if (flight1.data.length == 0 && flight2.data.length == 0){
+			success = false;
+			price = "No flight data found.";
 		}
-		else if (flightJSON1.data.length == 0 || flightJSON2.data.length == 0){
-			var Price = "Missing data from one origin.";
-			var Destination = dest;
-			var Success = false;
+		else if (flight1.data.length == 0 || flight2.data.length == 0){
+			success = false;
+			price = "Missing data from one origin.";
 		} else {
-			var Price = flightJSON1.data[0].value + flightJSON2.data[0].value;
-			Price = '$' + Math.round(Price);
-			var Destination = flightJSON1.data[0].destination;
-			var Details = [
-				{origin: "from " + flightJSON1.data[0].origin,
-				price: '$' + Math.round(flightJSON1.data[0].value)},
-				{origin: "from " + flightJSON2.data[0].origin,
-				price: '$' + Math.round(flightJSON2.data[0].value)}
+			success = true;
+			price = '$' + Math.round(flight1.data[0].value + flight2.data[0].value);
+			var details = [
+				{origin: "from " + flight1.data[0].origin,
+				price: '$' + Math.round(flight1.data[0].value)},
+				{origin: "from " + flight2.data[0].origin,
+				price: '$' + Math.round(flight2.data[0].value)}
 			];
-			var Success = true;
 		}
-		const flightData = {Success, Destination: Destination, Price: Price, Details: Details}
+		let flightData = {success, price, details}
 		return flightData;
 	} catch(err){console.log('getFlightData error', err)};
 }

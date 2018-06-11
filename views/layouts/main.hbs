@@ -13,7 +13,7 @@
 </head>
 <body>
   <div class="container">
-    <h1 id="header">{{ header }}</h1>
+    <h1 id="header" onclick="home()">{{ header }}</h1>
     <h3 id="subheader">{{ subheader }}</h3>
     <div class="inputs">
       <div class="date">
@@ -39,13 +39,11 @@
       {{#each flightResults}}
         {{#if success}}
           <li class="success" href="{{ link }}">
-            <span class="destination">To {{ destination }}:</span>
             <span class="price">{{ price }}</span>
-						<div class="details">
-							{{#each details}}
-							<span>{{ origin }}: {{ price }}</span><br>
-							{{/each}}
-						</div>
+						<span class="destination">to {{ destination }}</span>
+						{{#each details}}
+							<br><span class="details">{{ price }} {{ origin }}</span>
+						{{/each}}
             <span class="button">View flights</span>
           </li>
         {{/if}}

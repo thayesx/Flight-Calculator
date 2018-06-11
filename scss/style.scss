@@ -103,9 +103,12 @@ h3 {
   text-align: left;
   font-size: 20px;
   margin: 32px auto;
-  list-style-type: none;
-  width: 60%;
-  .status > p {
+	width: 60%;
+	ul {
+		list-style-type: none;
+		margin-bottom: 32px;
+	}
+  .status {
     font-size: 14px;
     text-align: left;
     padding-bottom: 12px;

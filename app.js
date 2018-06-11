@@ -51,7 +51,7 @@ app.get('/search?', (req, res) => {
 	handleFlightResults(orig1, orig2, date, destinations, token)
 	// Render view with data returned from API
 	.then((results) => {res.render('layouts/main', {
-			header: 'Get going!',
+			header: '✈️ Get going!',
 			subheader: 'Found these prices for flying to places from ' + orig1 + ' and ' + orig2 + ' in the month of ' + date,
 			flightResults: results.flightResults,
 			found: 'Found prices for flights to... ' + results.found, 
@@ -145,7 +145,7 @@ async function getFlightData(url1, url2){
 			price = "Missing data from one origin.";
 		} else {
 			success = true;
-			price = '$' + Math.round(flight1.data[0].value + flight2.data[0].value);
+			price = Math.round(flight1.data[0].value + flight2.data[0].value);
 			var details = [
 				{origin: "from " + flight1.data[0].origin,
 				price: '$' + Math.round(flight1.data[0].value)},

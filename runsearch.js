@@ -1,7 +1,18 @@
 let baseURL;
 
 $(document).ready(() => {
-  baseURL = location.origin;
+	baseURL = location.origin;
+	var list = $(".flightResults.sort");
+
+	$(".sort").each(function(){
+		$(this).html(
+			$(this).children('.success').sort(
+				function(a, b){
+					return ($(b).data('price')) < ($(a).data('price')) ? 1 : -1;
+				}
+			)
+		);
+	});
 });
 
 // Define variables

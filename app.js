@@ -107,7 +107,7 @@ async function handleFlightResults(orig1, orig2, date, destinations, token) {
 					// Call API, JSONify result and assign result.data to flightData
 					let flightData = await getFlightData(url1, url2);
 					flightResults.push({'success': flightData.success, 
-															'destination': destination.city, 
+															'destination': destination.city + " (" + destination.code + ")", 
 															'price': flightData.price, 
 															'details': flightData.details});
 		

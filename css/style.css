@@ -110,7 +110,8 @@ h3 {
       width: 80%; } }
   @media screen and (max-width: 480px) {
     #flightResults {
-      width: 100%; } }
+      width: 100%;
+      font-size: 17px; } }
   #flightResults li {
     background: white;
     border-radius: 10px;
@@ -130,6 +131,9 @@ h3 {
       font-size: 14px;
       opacity: .7;
       display: inline-block; }
+      @media screen and (max-width: 480px) {
+        #flightResults li.success .details {
+          margin-left: 6px; } }
     #flightResults li.success .button {
       display: block;
       float: right;

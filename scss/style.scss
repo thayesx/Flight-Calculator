@@ -22,6 +22,7 @@
 // Global style variables
 $font: 'Muli', sans-serif;
 $primaryColor: rgb(30, 61, 236);
+$backgroundColor: linear-gradient(rgb(175, 240, 240), rgb(85, 210, 240));
 @mixin textPadding(){padding: 16px 8px;}
 @mixin borderRadius(){border-radius: 10px;}
 @mixin fontRegular(){font-weight: 400;}
@@ -31,7 +32,16 @@ $primaryColor: rgb(30, 61, 236);
 
 body {
   font-family: $font;
-  background: rgb(175, 240, 240);
+  background: $backgroundColor;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  overflow-y: scroll;
 }
 
 h3 {

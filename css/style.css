@@ -4,7 +4,15 @@
 
 body {
   font-family: "Muli", sans-serif;
-  background: #aff0f0; }
+  background: linear-gradient(#aff0f0, #55d2f0);
+  height: 100%;
+  overflow-y: scroll; }
+
+html {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  overflow-y: scroll; }
 
 h3 {
   font-size: 17px; }
